@@ -1,0 +1,41 @@
+{
+  "name": "proxifier",
+  "version": "1.0.0",
+  "description": "easy to use man-in-the-middle proxy",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "./node_modules/.bin/babel --plugins 'transform-runtime' src --out-dir ./dist",
+    "lint": "eslint ./src",
+    "lintfix": "eslint ./src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxnowack/proxifier.git"
+  },
+  "keywords": [
+    "mitm",
+    "proxy"
+  ],
+  "author": "Max Nowack <max@unsou.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxnowack/proxifier/issues"
+  },
+  "homepage": "https://github.com/maxnowack/proxifier#readme",
+  "devDependencies": {
+    "babel-eslint": "6.x.x",
+    "eslint": "^2.11.1",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "babel-cli": "6.x.x",
+    "babel-core": "6.x.x",
+    "babel-polyfill": "6.x.x",
+    "babel-preset-es2015": "6.x.x",
+    "babel-preset-stage-2": "6.x.x",
+    "babel-plugin-transform-runtime": "6.x.x"
+  },
+  "dependencies": {
+    "babel-runtime": "6.x.x",
+    "http-mitm-proxy": "^0.5.0"
+  }
+}
