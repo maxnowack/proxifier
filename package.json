@@ -1,6 +1,6 @@
 {
   "name": "proxifier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "easy to use man-in-the-middle proxy",
   "main": "index.js",
   "scripts": {
