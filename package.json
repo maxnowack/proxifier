@@ -1,12 +1,13 @@
 {
   "name": "proxifier",
-  "version": "1.0.1",
-  "description": "easy to use man-in-the-middle proxy",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Easy to use man-in-the-middle proxy",
+  "main": "dist/index.js",
   "scripts": {
-    "prepublish": "./node_modules/.bin/babel --plugins 'transform-runtime' src --out-dir ./dist",
-    "lint": "eslint ./src",
-    "lintfix": "eslint ./src --fix"
+    "prepare": "npm run build",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "clean": "rm -r ./dist",
+    "build": "npm run clean; tsc"
   },
   "repository": {
     "type": "git",
@@ -23,19 +24,11 @@
   },
   "homepage": "https://github.com/maxnowack/proxifier#readme",
   "devDependencies": {
-    "babel-eslint": "6.x.x",
-    "eslint": "^2.11.1",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.8.1",
-    "babel-cli": "6.x.x",
-    "babel-core": "6.x.x",
-    "babel-polyfill": "6.x.x",
-    "babel-preset-es2015": "6.x.x",
-    "babel-preset-stage-2": "6.x.x",
-    "babel-plugin-transform-runtime": "6.x.x"
+    "@types/node": "^10.5.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
   },
   "dependencies": {
-    "babel-runtime": "6.x.x",
-    "http-mitm-proxy": "^0.5.0"
+    "http-mitm-proxy": "git+https://github.com/joeferner/node-http-mitm-proxy.git"
   }
 }
