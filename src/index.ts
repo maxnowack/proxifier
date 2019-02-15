@@ -1,6 +1,8 @@
 import * as proxy from 'http-mitm-proxy'
 import { Configuration } from './interfaces'
 
+export { Configuration } from './interfaces'
+
 export default class Proxifier {
   private options: proxy.IProxyOptions = {}
   private proxy = proxy()
@@ -30,11 +32,14 @@ export default class Proxifier {
           return requestChunkDone()
         })
         context.onRequestEnd((ctx, requestDone) => {
-          const data = Buffer.concat(requestChunks).toString()
+          const data = Buffer.concat(requestChunks)
           Promise.all(this.configs.map(config => {
-            if (!config.match(context.clientToProxyRequest) || !config.request) return new Promise<void>(r => r())
+            if (!config.match(context.clientToProxyRequest) || !config.request) {
+              return new Promise<boolean>(r => r(false))
+            }
             return config.request(data, ctx.clientToProxyRequest, ctx.proxyToServerRequest)
-          })).then(() => {
+          })).then(results => {
+            if (!results.includes(true)) ctx.proxyToServerRequest.write(data)
             requestDone()
           })
         })
@@ -45,11 +50,18 @@ export default class Proxifier {
           return responseChunkDone()
         })
         context.onResponseEnd((ctx, responseDone) => {
-          const data = Buffer.concat(responseChunks).toString()
+          const data = Buffer.concat(responseChunks)
           Promise.all(this.configs.map(config => {
-            if (!config.match(context.clientToProxyRequest) || !config.response) return new Promise<void>(r => r())
-            return config.response(data, ctx.serverToProxyResponse, ctx.proxyToClientResponse)
-          })).then(() => {
+            if (!config.match(context.clientToProxyRequest) || !config.response) {
+              return new Promise<boolean>(r => r(false))
+            }
+            return config.response(data,
+              ctx.serverToProxyResponse,
+              ctx.proxyToClientResponse,
+              ctx.clientToProxyRequest,
+              ctx.proxyToServerRequest)
+          })).then(results => {
+            if (!results.includes(true)) ctx.proxyToClientResponse.write(data)
             responseDone()
           })
         })

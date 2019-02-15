@@ -3,11 +3,13 @@ import * as http from 'http'
 export interface Configuration {
   match(clientToProxyRequest: http.IncomingMessage): boolean,
   request?(
-    data: string,
+    data: Buffer,
     clientToProxyRequest: any,
-    proxyToServerRequest: any): Promise<void>,
+    proxyToServerRequest: any): Promise<boolean>,
   response?(
-    data: string,
+    data: Buffer,
     serverToProxyResponse: any,
-    proxyToClientResponse: any): Promise<void>,
+    proxyToClientResponse: any,
+    clientToProxyRequest?: any,
+    proxyToServerRequest?: any): Promise<boolean>,
 }
