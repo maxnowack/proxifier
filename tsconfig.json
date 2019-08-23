@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "rootDir": "src",
+    "outDir": "./dist",
+    "strict": true,
+    "downlevelIteration": true,
+    "lib": ["es2017"],
+    "baseUrl": ".",
+    "noErrorTruncation": true,
+  }
+}
